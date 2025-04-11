@@ -20,10 +20,7 @@ coverage/
 # Optional npm cache directory
 .npm/
 
-# dotenv environment files
-.env
-.env.local
-.env.*.local
+
 
 # Build output
 dist/
