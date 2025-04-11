@@ -2,6 +2,21 @@
   @tailwind components;
   @tailwind utilities;
 
+
+
+  /* File: src/index.css */
+
+body {
+  margin: 0;
+  padding: 0;
+  background-image: url('/bg.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  height: 100vh;
+  font-family: sans-serif;
+}
+
   @layer base {
     :root {
       --background: 0 0% 100%;
