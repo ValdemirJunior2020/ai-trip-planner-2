@@ -26,7 +26,8 @@ function UserTripCardItem({trip}) {
         className="object-cover rounded-xl h-[220px]"/>
         <div>
             <h2 className='font-bold text-lg'>{trip?.userSelection?.location?.label}</h2>
-            <h2 className='text-sm text-gray-500'>{trip?.userSelection.noOfDays} Days trip with {trip?.userSelection?.budget} Budget</h2>
+            <h2 className='text-sm text-white'>{trip?.userSelection.noOfDays} Days trip with {trip?.userSelection?.budget} Budget</h2>
+
         </div>
     </div>
     </Link>

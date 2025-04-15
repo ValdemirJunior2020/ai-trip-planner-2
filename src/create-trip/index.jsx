@@ -112,7 +112,7 @@ function CreateTrip() {
 
       <div className='mt-20 flex flex-col gap-10'>
         <div>
-          <h2 className='text-xl my-3 font-medium'>What is destination of choice?</h2>
+        <h2 className='text-xl my-3 font-medium text-white'>What is destination of choice?</h2>
           <GooglePlacesAutocomplete
             apiKey={import.meta.env.VITE_GOOGLE_PLACE_API_KEY}
             selectProps={{
@@ -123,7 +123,10 @@ function CreateTrip() {
         </div>
 
         <div>
-          <h2 className='text-xl my-3 font-medium'>How many days are you planning your trip?</h2>
+        <h2 className='text-xl my-3 font-medium text-white'>How many days are you planning your trip?</h2>
+
+
+
           <Input
             placeholder='Ex. 3'
             type='number'
@@ -132,7 +135,7 @@ function CreateTrip() {
         </div>
 
         <div>
-          <h2 className='text-xl my-3 font-medium'>What is Your Budget?</h2>
+          <h2 className='text-xl my-3 font-medium text-white'>What is Your Budget?</h2>
           <div className='grid grid-cols-3 gap-5 mt-5'>
             {SelectBudgetOptions.map((item, index) => (
               <div key={index}
@@ -147,7 +150,7 @@ function CreateTrip() {
         </div>
 
         <div>
-          <h2 className='text-xl my-3 font-medium'>Who do you plan on traveling with on your next adventure?</h2>
+          <h2 className='text-xl my-3 font-medium text-white'>Who do you plan on traveling with on your next adventure?</h2>
           <div className='grid grid-cols-3 gap-5 mt-5'>
             {SelectTravelesList.map((item, index) => (
               <div key={index}
@@ -155,7 +158,7 @@ function CreateTrip() {
                 className={`p-4 border cursor-pointer rounded-lg hover:shadow-lg ${formData?.traveler === item.people && 'shadow-lg border-black'}`}>
                 <h2 className='text-4xl'>{item.icon}</h2>
                 <h2 className='font-bold text-lg'>{item.title}</h2>
-                <h2 className='text-sm text-gray-500'>{item.desc}</h2>
+                <h2 className='text-sm text-white'>{item.desc}</h2>
               </div>
             ))}
           </div>

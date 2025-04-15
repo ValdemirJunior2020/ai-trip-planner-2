@@ -13,7 +13,8 @@ function PlacesToVisit({trip}) {
                     <div className='grid md:grid-cols-2 gap-5'>
                     {item.plan.map((place,index)=>(
                             <div className=''>
-                                <h2 className='font-medium text-sm text-orange-600'>{place.time}</h2>
+                                <h2 className='font-medium text-sm text-white'>{place.time}</h2>
+
                                 <PlaceCardItem place={place} />
                             </div>
                     ))}
