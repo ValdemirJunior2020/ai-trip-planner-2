@@ -142,8 +142,10 @@ function CreateTrip() {
                 onClick={() => handleInputChange('budget', item.title)}
                 className={`p-4 border cursor-pointer rounded-lg hover:shadow-lg ${formData?.budget === item.title && 'shadow-lg border-black'}`}>
                 <h2 className='text-4xl'>{item.icon}</h2>
-                <h2 className='font-bold text-lg'>{item.title}</h2>
-                <h2 className='text-sm text-gray-500'>{item.desc}</h2>
+                <h2 className='font-bold text-lg text-white'>{item.title}</h2>
+
+                <h2 className='text-sm text-white'>{item.desc}</h2>
+
               </div>
             ))}
           </div>
@@ -157,7 +159,8 @@ function CreateTrip() {
                 onClick={() => handleInputChange('traveler', item.people)}
                 className={`p-4 border cursor-pointer rounded-lg hover:shadow-lg ${formData?.traveler === item.people && 'shadow-lg border-black'}`}>
                 <h2 className='text-4xl'>{item.icon}</h2>
-                <h2 className='font-bold text-lg'>{item.title}</h2>
+                <h2 className='font-bold text-lg text-white'>{item.title}</h2>
+
                 <h2 className='text-sm text-white'>{item.desc}</h2>
               </div>
             ))}
