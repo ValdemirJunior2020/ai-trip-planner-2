@@ -32,7 +32,11 @@ console.log('GOOGLE_MAPS_API_KEY:', import.meta.env.VITE_GOOGLE_MAPS_API_KEY)
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <PayPalScriptProvider options={{ "client-id": "AQ-D8kJz8K5UsCbBrA-rfkiuiEy3pQGKTeoyhULB56lFiq07AZAqfo34vK0YHo3TCLX6Pla_eimwPHEA" }}>
+    <PayPalScriptProvider options={{
+      "client-id": "BAADAY77BzegnnwG_vphGq8M_5tu2VUzVQfE6Y4EGZKk7JznUTzCmlSChEHID8Ne_qOO-mfenXSSy9sACs",
+      currency: "USD",
+      components: "buttons"
+    }}>
       <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_AUTH_CLIENT_ID}>
         <Header />
         <Toaster />
