@@ -6,7 +6,6 @@ import { useEffect, useState } from 'react';
 
 import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
 import { toast } from 'sonner';
-import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import {
   Dialog,
   DialogContent,
@@ -21,6 +20,7 @@ import axios from 'axios';
 import { doc, setDoc } from 'firebase/firestore';
 import { db } from '@/service/firebaseConfig';
 import { useNavigate } from 'react-router-dom';
+import GenerateTripWithPay from '@/components/custom/GenerateTripWithPay'; // ✅ PayPal trip component
 
 function CreateTrip() {
   const [place, setPlace] = useState();
@@ -110,13 +110,12 @@ function CreateTrip() {
       <h2 className="text-3xl font-bold mb-6 text-white">Tell us your travel preferences 🏕️🌴</h2>
 
       <p className='mt-3 text-white text-xl'>
-  Just provide some basic information, and our trip planner will generate a customized itinerary based on your preferences.
-</p>
-
+        Just provide some basic information, and our trip planner will generate a customized itinerary based on your preferences.
+      </p>
 
       <div className='mt-20 flex flex-col gap-10'>
         <div>
-        <h2 className='text-xl my-3 font-medium text-white'>What is destination of choice?</h2>
+          <h2 className='text-xl my-3 font-medium text-white'>What is destination of choice?</h2>
           <GooglePlacesAutocomplete
             apiKey={import.meta.env.VITE_GOOGLE_PLACE_API_KEY}
             selectProps={{
@@ -127,10 +126,7 @@ function CreateTrip() {
         </div>
 
         <div>
-        <h2 className='text-xl my-3 font-medium text-white'>How many days are you planning your trip?</h2>
-
-
-
+          <h2 className='text-xl my-3 font-medium text-white'>How many days are you planning your trip?</h2>
           <Input
             placeholder='Ex. 3'
             type='number'
@@ -147,9 +143,7 @@ function CreateTrip() {
                 className={`p-4 border cursor-pointer rounded-lg hover:shadow-lg ${formData?.budget === item.title && 'shadow-lg border-black'}`}>
                 <h2 className='text-4xl'>{item.icon}</h2>
                 <h2 className='font-bold text-lg text-white'>{item.title}</h2>
-
                 <h2 className='text-sm text-white'>{item.desc}</h2>
-
               </div>
             ))}
           </div>
@@ -164,7 +158,6 @@ function CreateTrip() {
                 className={`p-4 border cursor-pointer rounded-lg hover:shadow-lg ${formData?.traveler === item.people && 'shadow-lg border-black'}`}>
                 <h2 className='text-4xl'>{item.icon}</h2>
                 <h2 className='font-bold text-lg text-white'>{item.title}</h2>
-
                 <h2 className='text-sm text-white'>{item.desc}</h2>
               </div>
             ))}
@@ -172,12 +165,8 @@ function CreateTrip() {
         </div>
       </div>
 
-      <div className='my-10 justify-end flex'>
-      <Button className="bg-green-500 hover:bg-green-600 text-black font-bold" disabled={loading} onClick={OnGenerateTrip}>
-  {loading ? <AiOutlineLoading3Quarters className='h-7 w-7 animate-spin' /> : 'Generate Trip'}
-</Button>
-
-      </div>
+      {/* ✅ PayPal Button with logic safely extracted */}
+      <GenerateTripWithPay onTripGenerate={OnGenerateTrip} />
 
       <Dialog open={openDailog} onOpenChange={setOpenDailog}>
         <DialogTrigger asChild>

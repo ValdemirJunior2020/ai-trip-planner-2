@@ -1,3 +1,4 @@
+// File: src/main.jsx
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
@@ -7,6 +8,7 @@ import CreateTrip from './create-trip/index.jsx'
 import Header from './components/custom/Header.jsx'
 import { Toaster } from './components/ui/sonner.jsx'
 import { GoogleOAuthProvider } from '@react-oauth/google'
+import { PayPalScriptProvider } from '@paypal/react-paypal-js'
 import Viewtrip from './view-trip/[tripId]/index.jsx'
 import MyTrips from './my-trips/index.jsx'
 
@@ -30,10 +32,12 @@ console.log('GOOGLE_MAPS_API_KEY:', import.meta.env.VITE_GOOGLE_MAPS_API_KEY)
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_AUTH_CLIENT_ID}>
-      <Header />
-      <Toaster />
-      <RouterProvider router={router} />
-    </GoogleOAuthProvider>
+    <PayPalScriptProvider options={{ "client-id": "AQ-D8kJz8K5UsCbBrA-rfkiuiEy3pQGKTeoyhULB56lFiq07AZAqfo34vK0YHo3TCLX6Pla_eimwPHEA" }}>
+      <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_AUTH_CLIENT_ID}>
+        <Header />
+        <Toaster />
+        <RouterProvider router={router} />
+      </GoogleOAuthProvider>
+    </PayPalScriptProvider>
   </React.StrictMode>
 )
