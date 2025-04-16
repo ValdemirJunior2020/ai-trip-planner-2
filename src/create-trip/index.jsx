@@ -169,9 +169,10 @@ function CreateTrip() {
       </div>
 
       <div className='my-10 justify-end flex'>
-        <Button disabled={loading} onClick={OnGenerateTrip}>
-          {loading ? <AiOutlineLoading3Quarters className='h-7 w-7 animate-spin' /> : 'Generate Trip'}
-        </Button>
+      <Button className="bg-green-500 hover:bg-green-600 text-black font-bold" disabled={loading} onClick={OnGenerateTrip}>
+  {loading ? <AiOutlineLoading3Quarters className='h-7 w-7 animate-spin' /> : 'Generate Trip'}
+</Button>
+
       </div>
 
       <Dialog open={openDailog} onOpenChange={setOpenDailog}>
