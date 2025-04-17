@@ -59,7 +59,7 @@ function Header() {
           <Button
             className='bg-white text-black font-bold rounded-full'
             onClick={() => {
-              alert('Thanks for reaching out! Our response will arrive in about 5 minutes.');
+              alert('Thanks for reaching out!email us at travelplanerai@gmail.com and Our response will arrive in about 5 minutes.');
               window.location.href = 'mailto:travelplanerai@gmail.com';
             }}
           >
