@@ -15,7 +15,7 @@ function Hero() {
 
       <Link to={'/create-trip'}>
         <Button className="bg-green-500 hover:bg-green-600 text-black font-bold">
-          Get Started, It is Free
+          Get Started, only 1.99
         </Button>
       </Link>
 
