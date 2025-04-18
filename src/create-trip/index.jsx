@@ -165,8 +165,14 @@ function CreateTrip() {
         </div>
       </div>
 
-      {/* ✅ PayPal Button with logic safely extracted */}
-      <GenerateTripWithPay onTripGenerate={OnGenerateTrip} />
+      {/* ✅ Pass trip form data to validate before PayPal payment */}
+      <GenerateTripWithPay
+        onTripGenerate={OnGenerateTrip}
+        destination={formData?.location?.label}
+        days={formData?.noOfDays}
+        budget={formData?.budget}
+        group={formData?.traveler}
+      />
 
       <Dialog open={openDailog} onOpenChange={setOpenDailog}>
         <DialogTrigger asChild>

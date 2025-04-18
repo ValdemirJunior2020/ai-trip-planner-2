@@ -1,3 +1,5 @@
+// File: src/components/custom/GenerateTripWithPay.jsx
+
 import { useState } from "react";
 import { PayPalButtons } from "@paypal/react-paypal-js";
 import { Button } from "@/components/ui/button";
@@ -7,9 +9,23 @@ import { db } from "@/service/firebaseConfig";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import PropTypes from "prop-types";
 
-function GenerateTripWithPay({ onTripGenerate }) {
+function GenerateTripWithPay({
+  onTripGenerate,
+  destination,
+  days,
+  budget,
+  group,
+}) {
   const [showPaypal, setShowPaypal] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const validateFields = () => {
+    if (!destination || !days || !budget || !group) {
+      toast.error("🚫 Please complete all trip preferences before generating your trip.");
+      return false;
+    }
+    return true;
+  };
 
   const savePaymentLog = async (details) => {
     const user = JSON.parse(localStorage.getItem("user"));
@@ -41,13 +57,18 @@ function GenerateTripWithPay({ onTripGenerate }) {
     setLoading(false);
   };
 
+  const handleClick = () => {
+    if (!validateFields()) return;
+    setShowPaypal(true);
+  };
+
   return (
     <div className="my-10 justify-end flex flex-col items-center gap-4">
       {!showPaypal && (
         <Button
           className="bg-green-500 hover:bg-green-600 text-black font-bold"
           disabled={loading}
-          onClick={() => setShowPaypal(true)}
+          onClick={handleClick}
         >
           {loading ? (
             <AiOutlineLoading3Quarters className="h-7 w-7 animate-spin" />
@@ -61,14 +82,16 @@ function GenerateTripWithPay({ onTripGenerate }) {
         <PayPalButtons
           style={{ layout: "vertical" }}
           disabled={loading}
-          forceReRender={[loading]} // ensures re-render if state changes
+          forceReRender={[loading]}
           createOrder={(data, actions) => {
             return actions.order.create({
-              purchase_units: [{
-                amount: {
-                  value: "1.99",
+              purchase_units: [
+                {
+                  amount: {
+                    value: "1.99",
+                  },
                 },
-              }],
+              ],
             });
           }}
           onApprove={async (data, actions) => {
@@ -87,6 +110,10 @@ function GenerateTripWithPay({ onTripGenerate }) {
 
 GenerateTripWithPay.propTypes = {
   onTripGenerate: PropTypes.func.isRequired,
+  destination: PropTypes.string,
+  days: PropTypes.string,
+  budget: PropTypes.string,
+  group: PropTypes.string,
 };
 
 export default GenerateTripWithPay;
