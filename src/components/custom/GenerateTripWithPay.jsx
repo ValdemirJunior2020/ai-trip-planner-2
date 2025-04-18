@@ -1,5 +1,3 @@
-// File: src/components/custom/GenerateTripWithPay.jsx
-
 import { useState } from "react";
 import { PayPalButtons } from "@paypal/react-paypal-js";
 import { Button } from "@/components/ui/button";
@@ -9,15 +7,15 @@ import { db } from "@/service/firebaseConfig";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import PropTypes from "prop-types";
 
-function GenerateTripWithPay({
-  onTripGenerate,
-  destination,
-  days,
-  budget,
-  group,
-}) {
+// ✅ Define admin users
+const ADMIN_EMAILS = ["infojr.83@gmail.com"];
+
+function GenerateTripWithPay({ onTripGenerate, destination, days, budget, group }) {
   const [showPaypal, setShowPaypal] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const user = JSON.parse(localStorage.getItem("user"));
+  const isAdmin = ADMIN_EMAILS.includes(user?.email);
 
   const validateFields = () => {
     if (!destination || !days || !budget || !group) {
@@ -28,8 +26,6 @@ function GenerateTripWithPay({
   };
 
   const savePaymentLog = async (details) => {
-    const user = JSON.parse(localStorage.getItem("user"));
-
     await setDoc(doc(db, "TripPayments", details.id), {
       userEmail: user?.email || "unknown",
       amount: 1.99,
@@ -48,7 +44,7 @@ function GenerateTripWithPay({
 
     try {
       await savePaymentLog(details);
-      await onTripGenerate(); // Run trip generation function
+      await onTripGenerate();
     } catch (err) {
       console.error("Trip generation failed:", err);
       toast.error("😓 Payment succeeded, but generating the trip failed.");
@@ -62,47 +58,80 @@ function GenerateTripWithPay({
     setShowPaypal(true);
   };
 
+  const handleAdminGenerate = async () => {
+    if (!validateFields()) return;
+    setLoading(true);
+    await onTripGenerate();
+    setLoading(false);
+  };
+
   return (
     <div className="my-10 justify-end flex flex-col items-center gap-4">
-      {!showPaypal && (
+      {isAdmin && (
+        <p className="text-green-400 text-sm font-semibold">
+          Admin Access: Payment skipped
+        </p>
+      )}
+
+      {isAdmin ? (
         <Button
-          className="bg-green-500 hover:bg-green-600 text-black font-bold"
+          className="bg-gradient-to-r from-blue-500 to-purple-600 text-white font-bold border-2 border-yellow-300 shadow-md hover:scale-105 transition-all duration-300 animate-glow"
           disabled={loading}
-          onClick={handleClick}
+          onClick={handleAdminGenerate}
         >
           {loading ? (
             <AiOutlineLoading3Quarters className="h-7 w-7 animate-spin" />
           ) : (
-            "Generate Trip - $1.99"
+            <>👑 Generate Trip (Admin Free)</>
           )}
         </Button>
-      )}
+      ) : (
+        <>
+          {!showPaypal && (
+            <Button
+              className="bg-green-500 hover:bg-green-600 text-black font-bold"
+              disabled={loading}
+              onClick={handleClick}
+            >
+              {loading ? (
+                <AiOutlineLoading3Quarters className="h-7 w-7 animate-spin" />
+              ) : (
+                "Generate Trip - $1.99"
+              )}
+            </Button>
+          )}
 
-      {showPaypal && (
-        <PayPalButtons
-          style={{ layout: "vertical" }}
-          disabled={loading}
-          forceReRender={[loading]}
-          createOrder={(data, actions) => {
-            return actions.order.create({
-              purchase_units: [
-                {
-                  amount: {
-                    value: "1.99",
-                  },
-                },
-              ],
-            });
-          }}
-          onApprove={async (data, actions) => {
-            const details = await actions.order.capture();
-            await handlePaymentApproved(details);
-          }}
-          onError={(err) => {
-            toast.error("❌ Payment error. Please try again.");
-            console.error("PayPal Error:", err);
-          }}
-        />
+          {showPaypal && (
+            <PayPalButtons
+              style={{ layout: "vertical" }}
+              disabled={loading}
+              forceReRender={[loading]}
+              createOrder={(data, actions) => {
+                return actions.order.create({
+                  purchase_units: [
+                    {
+                      amount: {
+                        value: "1.99",
+                      },
+                    },
+                  ],
+                });
+              }}
+              onApprove={async (data, actions) => {
+                const details = await actions.order.capture();
+                await handlePaymentApproved(details);
+              }}
+              onError={(err) => {
+                toast.error("❌ Payment error. Please try again.");
+                console.error("PayPal Error:", err);
+              }}
+              onCancel={() => {
+                toast.error("❌ Payment cancelled.");
+                setShowPaypal(false);
+              }}
+            />
+          )}
+        </>
       )}
     </div>
   );
