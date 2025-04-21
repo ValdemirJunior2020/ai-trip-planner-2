@@ -28,8 +28,8 @@ function HotelCardItem({ hotel }) {
                     <h2 className='font-medium '>{hotel?.hotelName}</h2>
                     <h2 className='text-xs text-white'>📍 {hotel?.hotelAddress}</h2>
 
-                    <h2 className='text-sm'>💰 {hotel?.price}</h2>
-                    <h2 className='text-sm'>⭐ {hotel?.rating}</h2>
+                    <h2 className='text-sm text-white'>💰 {hotel?.price}</h2>
+                    <h2 className='text-sm text-white'>⭐ {hotel?.rating}</h2>
 
                 </div>
             </div>
